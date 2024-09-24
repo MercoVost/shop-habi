@@ -30,15 +30,22 @@ const CardButton = styled.button`
   cursor: pointer;
 
   &.clicked {
-    background-color: #3e8e41;
   }
 
-  &:isdisabled {
-    cursor: not-allowed;
+  &:disabled {
+    background-color: #ccc;
   }
 `;
 
-export const Card = ({ img, name, prace, buttonCard, nameButton, isClick }) => {
+export const Card = ({
+  img,
+  name,
+  prace,
+  buttonCard,
+  nameButton,
+  isClick,
+  isAdded,
+}) => {
   return (
     <Container>
       <CardImage src={img} alt={name} />
@@ -47,7 +54,7 @@ export const Card = ({ img, name, prace, buttonCard, nameButton, isClick }) => {
       <CardButton
         className={isClick ? "clicked" : ""}
         onClick={buttonCard}
-        $isDisabled={true}
+        disabled={isAdded}
       >
         {nameButton}
       </CardButton>

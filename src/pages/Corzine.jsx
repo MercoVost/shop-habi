@@ -1,20 +1,7 @@
 import { Card } from "../components/Card";
 
-export const Corzine = ({
-  cartItems,
-  setCartItems,
-  setIsClick,
-  isClick,
-  setQuantity,
-}) => {
-  const clickRemuve = (index) => {
-    setQuantity((e) => e - 1);
-    const newItems = cartItems.filter((_, i) => i !== index);
-    console.log(...newItems);
-    setCartItems(newItems);
-    setIsClick(false);
-  };
-  //
+export const Corzine = ({ cartItems, clickRemuve }) => {
+  console.log("Корзина ", ...cartItems);
 
   return (
     <>

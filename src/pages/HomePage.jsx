@@ -1,26 +1,12 @@
-import { info } from "../info";
-import { useState } from "react";
 import { Card } from "../components/Card";
 
-export const HomePage = ({ setQuantity, addToCart, isClick, setIsClick }) => {
-  const [products, setProducts] = useState(
-    info.map((product) => ({ ...product, isAdded: false }))
-  );
-
-  const handleAddToCart = (productIndex) => {
-    setQuantity((e) => e + 1);
-
-    addToCart(products[productIndex]);
-    console.log("Товар добавлен в корзину:", products[productIndex].name);
-
-    setProducts((prevProducts) =>
-      prevProducts.map((product, index) =>
-        index === productIndex ? { ...product, isAdded: true } : product
-      )
-    );
-
-    setIsClick(true);
-  };
+export const HomePage = ({
+  isClick,
+  handleAddToCart,
+  products,
+  setProducts,
+}) => {
+  console.log("Главный магазин", ...products);
 
   return (
     <>
@@ -33,6 +19,7 @@ export const HomePage = ({ setQuantity, addToCart, isClick, setIsClick }) => {
           buttonCard={() => handleAddToCart(index)}
           nameButton={product.isAdded ? "Добавлено" : "Добавить в корзину"}
           isClick={isClick}
+          isAdded={product.isAdded}
         />
       ))}
     </>

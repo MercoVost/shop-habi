@@ -23,7 +23,7 @@ export const Header = ({ titleButton, buttonCoint, quantity }) => {
   return (
     <Headers>
       <Container>
-        <Title onClick={titleButton}>HABIB-SHOP</Title>
+        <Title onClick={titleButton}>YAHYA-SHOP</Title>
         <LogoCointButton button={buttonCoint} quantity={quantity} />
       </Container>
     </Headers>
