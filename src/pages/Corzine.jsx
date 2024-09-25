@@ -1,6 +1,13 @@
 import { Card } from "../components/Card";
+import { ButtonCoints } from "../components/ButtonCoints";
 
-export const Corzine = ({ cartItems, clickRemuve }) => {
+export const Corzine = ({
+  cartItems,
+  clickRemuve,
+  productQuantities,
+  clickPlus,
+  clickMinus,
+}) => {
   console.log("Корзина ", ...cartItems);
 
   return (
@@ -17,6 +24,13 @@ export const Corzine = ({ cartItems, clickRemuve }) => {
               prace={product.prace}
               buttonCard={() => clickRemuve(index)}
               nameButton={"Удалить из коорзины"}
+              ButtonCoints={
+                <ButtonCoints
+                  productQuantities={productQuantities}
+                  clickPlus={() => clickPlus(index)}
+                  clickMinus={() => clickMinus(index)}
+                />
+              }
             />
           ))}
         </>

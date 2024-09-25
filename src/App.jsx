@@ -97,6 +97,9 @@ function App() {
                 setIsClick={setIsClick}
                 setQuantity={setQuantity}
                 clickRemuve={clickRemuve}
+                // productQuantities={}
+                // clickPlus={}
+                // clickMinus={}
               />
             }
           />

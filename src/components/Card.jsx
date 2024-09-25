@@ -15,6 +15,19 @@ const CardImage = styled.img`
   border-radius: 15px;
 `;
 
+const CardBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CardBlockInfo = styled.div`
+  background: red;
+`;
+
+const CardBlockQuantity = styled.div`
+  background: green;
+`;
+
 const CardName = styled.p`
   margin: 5px 0;
 `;
@@ -45,12 +58,21 @@ export const Card = ({
   nameButton,
   isClick,
   isAdded,
+  ButtonCoints,
 }) => {
   return (
     <Container>
       <CardImage src={img} alt={name} />
-      <CardName>{name}</CardName>
-      <CardPrace>{prace} рублей</CardPrace>
+
+      <CardBlock>
+        <CardBlockInfo>
+          <CardName>{name}</CardName>
+          <CardPrace>{prace} рублей</CardPrace>
+        </CardBlockInfo>
+
+        <CardBlockQuantity>{ButtonCoints}</CardBlockQuantity>
+      </CardBlock>
+
       <CardButton
         className={isClick ? "clicked" : ""}
         onClick={buttonCard}
