@@ -21,11 +21,11 @@ const CardBlock = styled.div`
 `;
 
 const CardBlockInfo = styled.div`
-  ${'' /* background: red; */}
+  background: red;
 `;
 
 const CardBlockQuantity = styled.div`
-  ${'' /* background: green; */}
+  background: green;
 `;
 
 const CardName = styled.p`

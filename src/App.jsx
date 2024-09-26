@@ -64,6 +64,33 @@ function App() {
     );
   };
 
+  //cartItems Масив корзины
+
+  //let sumArr =  cartItems.map((e) => e.prace)
+  // функция котория сумирует цены
+  // function sumPrace(arr) {
+  //   let sumArr = arr.map((e) => e.prace);
+  //   return sumArr.reduce((acc, num) => acc + num);
+  // }
+
+  // let summ = sumPrace(cartItems);
+
+  function sumPrace(arr) {
+    let sumArr = arr.map((e) => e.prace);
+    if (!sumArr || sumArr.length === 0) {
+      return 0;
+    }
+    return sumArr.reduce((acc, num) => acc + num);
+  }
+
+  let summ = sumPrace(cartItems);
+
+  console.log("Итог суммы", sumPrace(cartItems));
+
+  const clickPlus = () => {};
+
+  const clickMinus = () => {};
+
   return (
     <>
       <Header
@@ -97,9 +124,10 @@ function App() {
                 setIsClick={setIsClick}
                 setQuantity={setQuantity}
                 clickRemuve={clickRemuve}
-                // productQuantities={}
+                //productQuantities={}
                 // clickPlus={}
                 // clickMinus={}
+                praceQuantities={summ}
               />
             }
           />

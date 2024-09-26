@@ -7,6 +7,7 @@ export const Corzine = ({
   productQuantities,
   clickPlus,
   clickMinus,
+  praceQuantities,
 }) => {
   console.log("Корзина ", ...cartItems);
 
@@ -35,6 +36,7 @@ export const Corzine = ({
           ))}
         </>
       )}
+      <h1>Итог: {praceQuantities}</h1>
     </>
   );
 };

@@ -29,7 +29,7 @@ export const ButtonCoints = ({ productQuantities, clickPlus, clickMinus }) => {
       <Contauner>
         <ButtonPlus onClick={clickPlus}>+</ButtonPlus>
 
-        <ValueQuantity>{1}</ValueQuantity>
+        <ValueQuantity>{productQuantities}</ValueQuantity>
 
         <ButtonMinus onClick={clickMinus}>-</ButtonMinus>
       </Contauner>
