@@ -13,6 +13,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isClick, setIsClick] = useState(false);
   const [stateAdded, setStateAdded] = useState();
+  const [productCounts, setProductCounts] = useState([]);
 
   const navigate = useNavigate();
 
@@ -87,9 +88,13 @@ function App() {
 
   console.log("Итог суммы", sumPrace(cartItems));
 
-  const clickPlus = () => {};
+  const totalPrice = cartItems.reduce((total, product, index) => {
+    return total + product.prace * productCounts[index];
+  }, 0);
 
-  const clickMinus = () => {};
+  // const clickPlus = () => {};
+
+  // const clickMinus = () => {};
 
   return (
     <>
@@ -128,6 +133,9 @@ function App() {
                 // clickPlus={}
                 // clickMinus={}
                 praceQuantities={summ}
+                productCounts={productCounts}
+                setProductCounts={setProductCounts}
+                totalPrice={totalPrice}
               />
             }
           />
