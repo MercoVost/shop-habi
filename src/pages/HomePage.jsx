@@ -1,11 +1,6 @@
 import { Card } from "../components/Card";
 
-export const HomePage = ({
-  isClick,
-  handleAddToCart,
-  products,
-  setProducts,
-}) => {
+export const HomePage = ({ isClick, handleAddToCart, products }) => {
   console.log("Главный магазин", ...products);
 
   return (

@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { info } from "./info";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NotFound } from "./pages/NotFound";
 import { HomePage } from "./pages/HomePage";
 import { Corzine } from "./pages/Corzine";
@@ -26,7 +26,7 @@ function App() {
   };
 
   const addToCart = (product) => {
-    setCartItems((prevItems) => [...prevItems, product]); // добавляем товар в корзину
+    setCartItems((prevItems) => [...prevItems, product]);
   };
 
   const [products, setProducts] = useState(
@@ -65,36 +65,34 @@ function App() {
     );
   };
 
-  //cartItems Масив корзины
+  useEffect(() => {
+    // Инициализируем количество для каждого товара в корзине
+    setProductCounts(cartItems.map(() => 1));
+  }, [cartItems]);
 
-  //let sumArr =  cartItems.map((e) => e.prace)
-  // функция котория сумирует цены
-  // function sumPrace(arr) {
-  //   let sumArr = arr.map((e) => e.prace);
-  //   return sumArr.reduce((acc, num) => acc + num);
-  // }
+  const clickPlus = (index) => {
+    setProductCounts((prevCounts) => {
+      const newCounts = [...prevCounts];
+      if (newCounts[index] < cartItems[index].stock) {
+        newCounts[index] += 1;
+      }
+      return newCounts;
+    });
+  };
 
-  // let summ = sumPrace(cartItems);
-
-  function sumPrace(arr) {
-    let sumArr = arr.map((e) => e.prace);
-    if (!sumArr || sumArr.length === 0) {
-      return 0;
-    }
-    return sumArr.reduce((acc, num) => acc + num);
-  }
-
-  let summ = sumPrace(cartItems);
-
-  console.log("Итог суммы", sumPrace(cartItems));
+  const clickMinus = (index) => {
+    setProductCounts((prevCounts) => {
+      const newCounts = [...prevCounts];
+      if (newCounts[index] > 1) {
+        newCounts[index] -= 1;
+      }
+      return newCounts;
+    });
+  };
 
   const totalPrice = cartItems.reduce((total, product, index) => {
     return total + product.prace * productCounts[index];
   }, 0);
-
-  // const clickPlus = () => {};
-
-  // const clickMinus = () => {};
 
   return (
     <>
@@ -109,13 +107,10 @@ function App() {
             path="/"
             element={
               <HomePage
-                setQuantity={setQuantity}
-                addToCart={addToCart}
                 isClick={isClick}
                 setIsClick={setIsClick}
                 handleAddToCart={handleAddToCart}
                 products={products}
-                setProducts={setProducts}
               />
             }
           />
@@ -124,17 +119,10 @@ function App() {
             element={
               <Corzine
                 cartItems={cartItems}
-                setCartItems={setCartItems}
-                isClick={isClick}
-                setIsClick={setIsClick}
-                setQuantity={setQuantity}
                 clickRemuve={clickRemuve}
-                //productQuantities={}
-                // clickPlus={}
-                // clickMinus={}
-                praceQuantities={summ}
+                clickPlus={clickPlus}
+                clickMinus={clickMinus}
                 productCounts={productCounts}
-                setProductCounts={setProductCounts}
                 totalPrice={totalPrice}
               />
             }
