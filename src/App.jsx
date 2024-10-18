@@ -2,18 +2,15 @@ import { Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { info } from "./info";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NotFound } from "./pages/NotFound";
 import { HomePage } from "./pages/HomePage";
 import { Corzine } from "./pages/Corzine";
 import { useNavigate } from "react-router-dom";
 
 function App() {
-  const [quantity, setQuantity] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
-  const [isClick, setIsClick] = useState(false);
-  const [stateAdded, setStateAdded] = useState();
-  const [productCounts, setProductCounts] = useState([]);
+  const [products, setProducts] = useState(info);
+  const [corzineCards, setCorzineCards] = useState([]);
 
   const navigate = useNavigate();
 
@@ -25,81 +22,47 @@ function App() {
     navigate(-1);
   };
 
-  const addToCart = (product) => {
-    setCartItems((prevItems) => [...prevItems, product]);
-  };
-
-  const [products, setProducts] = useState(
-    info.map((product) => ({ ...product, isAdded: false }))
-  );
-
-  const handleAddToCart = (productIndex) => {
-    setQuantity((e) => e + 1);
-
-    addToCart(products[productIndex]);
-    console.log("Товар добавлен в корзину:", products[productIndex].name);
-
-    setProducts((prevProducts) =>
-      prevProducts.map((product, index) =>
-        index === productIndex ? { ...product, isAdded: true } : product
-      )
+  const handleAddToCart = (index) => {
+    const selecterProduct = products[index];
+    const isProductCart = corzineCards.some(
+      (cart) => cart.name === selecterProduct.name
     );
-    setStateAdded(false);
-    console.log(stateAdded);
+    console.log("isprodurct", isProductCart);
+    if (!isProductCart) {
+      setCorzineCards((prevCart) => [...prevCart, selecterProduct]);
+    } else {
+      console.log("Карточка уже добавлена ");
+    }
   };
 
   const clickRemuve = (index) => {
-    setQuantity((e) => Math.max(e - 1, 0));
+    setCorzineCards(corzineCards.filter((item, i) => i !== index));
+  };
 
-    const removedItem = cartItems[index];
-    const newItems = cartItems.filter((_, i) => i !== index);
-    setCartItems(newItems);
-
-    // Обновляем состояние products, устанавливая isAdded в false для удаленного товара
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.name === removedItem.name
-          ? { ...product, isAdded: false }
-          : product
+  const clickPlus = (index) => {
+    setCorzineCards((prevCards) =>
+      prevCards.map((item, i) =>
+        i === index ? { ...item, stock: item.stock + 1 } : item
       )
     );
   };
 
-  useEffect(() => {
-    // Инициализируем количество для каждого товара в корзине
-    setProductCounts(cartItems.map(() => 1));
-  }, [cartItems]);
-
-  const clickPlus = (index) => {
-    setProductCounts((prevCounts) => {
-      const newCounts = [...prevCounts];
-      if (newCounts[index] < cartItems[index].stock) {
-        newCounts[index] += 1;
-      }
-      return newCounts;
-    });
-  };
-
   const clickMinus = (index) => {
-    setProductCounts((prevCounts) => {
-      const newCounts = [...prevCounts];
-      if (newCounts[index] > 1) {
-        newCounts[index] -= 1;
-      }
-      return newCounts;
-    });
+    setCorzineCards((prevCards) =>
+      prevCards.map((item, i) =>
+        i === index && item.stock > 1
+          ? { ...item, stock: item.stock - 1 }
+          : item
+      )
+    );
   };
-
-  const totalPrice = cartItems.reduce((total, product, index) => {
-    return total + product.prace * productCounts[index];
-  }, 0);
 
   return (
     <>
       <Header
         titleButton={() => handleBack()}
         buttonCoint={() => handleClick()}
-        quantity={quantity}
+        quantity={corzineCards.length}
       ></Header>
       <Main>
         <Routes>
@@ -107,10 +70,9 @@ function App() {
             path="/"
             element={
               <HomePage
-                isClick={isClick}
-                setIsClick={setIsClick}
                 handleAddToCart={handleAddToCart}
                 products={products}
+                corzineCards={corzineCards}
               />
             }
           />
@@ -118,12 +80,10 @@ function App() {
             path="/corzine"
             element={
               <Corzine
-                cartItems={cartItems}
                 clickRemuve={clickRemuve}
                 clickPlus={clickPlus}
                 clickMinus={clickMinus}
-                productCounts={productCounts}
-                totalPrice={totalPrice}
+                corzineCards={corzineCards}
               />
             }
           />

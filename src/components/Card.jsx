@@ -20,13 +20,9 @@ const CardBlock = styled.div`
   justify-content: space-between;
 `;
 
-const CardBlockInfo = styled.div`
-  background: red;
-`;
+const CardBlockInfo = styled.div``;
 
-const CardBlockQuantity = styled.div`
-  background: green;
-`;
+const CardBlockQuantity = styled.div``;
 
 const CardName = styled.p`
   margin: 5px 0;
@@ -57,8 +53,8 @@ export const Card = ({
   buttonCard,
   nameButton,
   isClick,
-  isAdded,
   ButtonCoints,
+  disabled,
 }) => {
   return (
     <Container>
@@ -76,7 +72,7 @@ export const Card = ({
       <CardButton
         className={isClick ? "clicked" : ""}
         onClick={buttonCard}
-        disabled={isAdded}
+        disabled={disabled}
       >
         {nameButton}
       </CardButton>

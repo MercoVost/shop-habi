@@ -1,34 +1,30 @@
 import { Card } from "../components/Card";
 import { ButtonCoints } from "../components/ButtonCoints";
-import { useState, useEffect } from "react";
 
 export const Corzine = ({
-  cartItems,
+  corzineCards,
   clickRemuve,
   clickPlus,
   clickMinus,
-  productCounts,
-  totalPrice,
 }) => {
-  console.log("Корзина ", cartItems);
-
+  console.log(corzineCards);
   return (
     <>
-      {cartItems.length === 0 ? (
+      {corzineCards.length === 0 ? (
         <p>Корзина пуста</p>
       ) : (
         <>
-          {cartItems.map((product, index) => (
+          {corzineCards.map((product, index) => (
             <Card
               key={index}
               img={product.img}
               name={product.name}
-              prace={product.prace}
+              prace={product.prace * product.stock}
               buttonCard={() => clickRemuve(index)}
               nameButton={"Удалить из коорзины"}
               ButtonCoints={
                 <ButtonCoints
-                  productQuantities={productCounts[index]}
+                  productQuantities={product.stock}
                   clickPlus={() => clickPlus(index)}
                   clickMinus={() => clickMinus(index)}
                 />
@@ -37,7 +33,13 @@ export const Corzine = ({
           ))}
         </>
       )}
-      <h1>Итог: {totalPrice}</h1>
+      <h1>
+        Итог:
+        {corzineCards.reduce(
+          (total, product) => total + product.prace * product.stock,
+          0
+        )}
+      </h1>
     </>
   );
 };
